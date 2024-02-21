@@ -1,0 +1,14 @@
+{
+  "name": "cwfund-dgtsign",
+  "version": "1.0.0",
+  "description": "web3 based crowdfunding using digital signature",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
