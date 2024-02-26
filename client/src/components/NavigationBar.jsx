@@ -46,7 +46,7 @@ const NavigationBar = () => {
           </a>
           <button
             onClick={handleOpenModal}
-            className={`mr-2 hover:text-blue-500 ${modalOpen && "text-black font-bold pointer-events-none"}`}>
+            className={`mr-2 hover:text-blue-500 ${modalOpen && "text-black font-bold pointer-events-none"} ${isActive("/validator-registration") && "text-black font-bold pointer-events-none"}`}>
             Validator
           </button>
         </div>
