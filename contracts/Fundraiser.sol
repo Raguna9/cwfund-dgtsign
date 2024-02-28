@@ -14,34 +14,51 @@ contract Fundraiser is Ownable {
     event DonationReceived(address indexed donor, uint256 value);
     event Withdraw(uint256 amount);
     event DetailsUpdated(
-        string name,
+        string title,
         string description,
-        string websiteURL,
+        string url,
         string imageURL
     );
 
-    string public name;
+    uint256 public id;
+    string public title;
     string public description;
     string public url;
     string public imageURL;
+    bool public validationStatus;
+    bytes32 public signature;
+    address public validatorAddress;
     address payable public beneficiary;
     uint256 public totalDonations;
     uint256 public donationsCount;
 
     constructor(
-        string memory _name,
+        uint256 _id,
+        string memory _title,
         string memory _description,
         string memory _url,
         string memory _imageURL,
         address payable _beneficiary,
         address _custodian
     ) Ownable(_custodian) {
-        name = _name;
+        id = _id;
+        title = _title;
         description = _description;
         url = _url;
         imageURL = _imageURL;
         beneficiary = _beneficiary;
+        validationStatus = false;
+        signature = 0;
+        validatorAddress = address(0);
         transferOwnership(_custodian);
+    }
+
+    // Validator sets validation status and signature
+    function signFundraiser(bool _status, bytes32 _signature, address _validatorAddress) public onlyOwner {
+        require(validationStatus == false, "Fundraiser has already been validated");
+        validationStatus = _status;
+        signature = _signature;
+        validatorAddress = _validatorAddress;
     }
 
     fallback() external payable {
@@ -59,16 +76,16 @@ contract Fundraiser is Ownable {
     }
 
     function updateDetails(
-        string calldata _name,
+        string calldata _title,
         string calldata _description,
         string calldata _url,
         string calldata _imageURL
     ) external onlyOwner {
-        name = _name;
+        title = _title;
         description = _description;
         url = _url;
         imageURL = _imageURL;
-        emit DetailsUpdated(name, description, url, imageURL);
+        emit DetailsUpdated(title, description, url, imageURL);
     }
 
     function setBeneficiary(address payable _beneficiary) public onlyOwner {
@@ -80,6 +97,8 @@ contract Fundraiser is Ownable {
     }
 
     function donate() public payable {
+        require(validationStatus == true, "Fundraiser has not been validated yet");
+    
         Donation memory donation = Donation({
             value: msg.value,
             date: block.timestamp
