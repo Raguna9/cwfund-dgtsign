@@ -30,7 +30,6 @@ contract Fundraiser is Ownable {
     address public validatorAddress;
     address payable public beneficiary;
     uint256 public totalDonations;
-    uint256 public donationsCount;
 
     constructor(
         uint256 _id,
@@ -38,9 +37,8 @@ contract Fundraiser is Ownable {
         string memory _description,
         string memory _url,
         string memory _imageURL,
-        address payable _beneficiary,
-        address _custodian
-    ) Ownable(_custodian) {
+        address payable _beneficiary
+    ) Ownable(msg.sender) {
         id = _id;
         title = _title;
         description = _description;
@@ -50,7 +48,6 @@ contract Fundraiser is Ownable {
         validationStatus = false;
         signature = 0;
         validatorAddress = address(0);
-        transferOwnership(_custodian);
     }
 
     // Validator sets validation status and signature
@@ -61,17 +58,18 @@ contract Fundraiser is Ownable {
         validatorAddress = _validatorAddress;
     }
 
-    fallback() external payable {
-        receiveDonation();
-    }
-
-    receive() external payable {
-        receiveDonation();
-    }
-
-    function receiveDonation() private {
+    function donate() public payable {
+        require(validationStatus, "Fundraiser has not been validated yet");
+        require(msg.value > 0, "Donation amount must be greater than 0");
+        
+        Donation memory donation = Donation({
+            value: msg.value,
+            date: block.timestamp
+        });
+        _donations[msg.sender].push(donation);
+        
         totalDonations += msg.value;
-        donationsCount++;
+        
         emit DonationReceived(msg.sender, msg.value);
     }
 
@@ -85,6 +83,7 @@ contract Fundraiser is Ownable {
         description = _description;
         url = _url;
         imageURL = _imageURL;
+
         emit DetailsUpdated(title, description, url, imageURL);
     }
 
@@ -96,36 +95,12 @@ contract Fundraiser is Ownable {
         return _donations[msg.sender].length;
     }
 
-    function donate() public payable {
-        require(validationStatus == true, "Fundraiser has not been validated yet");
-    
-        Donation memory donation = Donation({
-            value: msg.value,
-            date: block.timestamp
-        });
-        _donations[msg.sender].push(donation);
-        receiveDonation();
-    }
+    function withdraw() external onlyOwner {
+        require(address(this).balance > 0, "No funds available for withdrawal");
 
-    function myDonations()
-        public
-        view
-        returns (uint256[] memory values, uint256[] memory dates)
-    {
-        uint256 count = myDonationsCount();
-        values = new uint256[](count);
-        dates = new uint256[](count);
-        for (uint256 i = 0; i < count; i++) {
-            Donation storage donation = _donations[msg.sender][i];
-            values[i] = donation.value;
-            dates[i] = donation.date;
-        }
-        return (values, dates);
-    }
-
-    function withdraw() public onlyOwner {
         uint256 balance = address(this).balance;
         beneficiary.transfer(balance);
+
         emit Withdraw(balance);
     }
 }

@@ -23,8 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 .env
-
-json/Context.json
-json/Factory.json
-json/Fundraiser.json
-json/Ownable.json

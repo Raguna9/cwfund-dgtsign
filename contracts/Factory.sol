@@ -80,28 +80,32 @@ contract Factory {
         );
     }
 
+    
     function createFundraiser(
-        string memory title,
-        string memory description,
-        string memory url,
-        string memory imageURL,
-        address payable beneficiary
+    string memory title,
+    string memory description,
+    string memory url,
+    string memory imageURL,
+    address payable beneficiary
     ) public {
+        // Check if the limit for fundraisers is reached
+        require(_fundraisers.length < maxLimit, "Fundraiser limit reached");
+
         fundraiserIdCounter++;
+
         Fundraiser fundraiser = new Fundraiser(
             fundraiserIdCounter,
             title,
             description,
             url,
             imageURL,
-            beneficiary,
-            msg.sender
+            beneficiary
         );
 
-    
         _fundraisers.push(fundraiser);
         emit FundraiserCreated(fundraiser, msg.sender);
     }
+
 
     function signFundraiser(uint256 fundraiserId, bool status, bytes32 signature, address validatorAddress) public onlyValidator {
         require(fundraiserId > 0 && fundraiserId <= fundraiserIdCounter, "Invalid fundraiser ID");
@@ -110,9 +114,12 @@ contract Factory {
         emit FundraiserSigned(fundraiser, msg.sender, status, signature);
     }
 
-    function fundraisers(uint256 limit, uint256 offset)
-        public view returns (Fundraiser[] memory coll){
-        require(offset <= fundraisersCount(), "offset out of bounds");
+    function getFundraisers(uint256 limit, uint256 offset)
+        external
+        view
+        returns (Fundraiser[] memory coll)
+    {
+        require(offset <= fundraisersCount(), "Offset out of bounds");
 
         uint256 size = fundraisersCount() - offset;
         size = size < limit ? size : limit;
@@ -122,6 +129,7 @@ contract Factory {
         for (uint256 i = 0; i < size; i++) {
             coll[i] = _fundraisers[offset + i];
         }
+
         return coll;
     }
 }
