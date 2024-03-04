@@ -26,7 +26,7 @@ contract Fundraiser is Ownable {
     string public url;
     string public imageURL;
     bool public validationStatus;
-    bytes32 public signature;
+    string public signature;
     address public validatorAddress;
     address payable public beneficiary;
     uint256 public totalDonations;
@@ -46,12 +46,12 @@ contract Fundraiser is Ownable {
         imageURL = _imageURL;
         beneficiary = _beneficiary;
         validationStatus = false;
-        signature = 0;
+        signature = '';
         validatorAddress = address(0);
     }
 
     // Validator sets validation status and signature
-    function signFundraiser(bool _status, bytes32 _signature, address _validatorAddress) public onlyOwner {
+    function signFundraiser(bool _status, string memory _signature, address _validatorAddress) public onlyOwner {
         require(validationStatus == false, "Fundraiser has already been validated");
         validationStatus = _status;
         signature = _signature;

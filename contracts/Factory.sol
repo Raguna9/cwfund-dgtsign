@@ -39,7 +39,7 @@ contract Factory {
         Fundraiser indexed fundraiser,
         address indexed validator,
         bool status,
-        bytes32 signature
+        string signature
     );
 
     function fundraisersCount() public view returns (uint256) {
@@ -107,7 +107,7 @@ contract Factory {
     }
 
 
-    function signFundraiser(uint256 fundraiserId, bool status, bytes32 signature, address validatorAddress) public onlyValidator {
+    function signFundraiser(uint256 fundraiserId, bool status, string memory signature, address validatorAddress) public onlyValidator {
         require(fundraiserId > 0 && fundraiserId <= fundraiserIdCounter, "Invalid fundraiser ID");
         Fundraiser fundraiser = _fundraisers[fundraiserId - 1];
         fundraiser.signFundraiser(status, signature, validatorAddress);
