@@ -5,6 +5,7 @@ import CreateFundraiser from "./pages/CreateFundraiser";
 import ValidatorRegistration from "./pages/ValidatorRegistration";
 
 import { Web3Provider } from './components/Web3Provider'
+import FundraisersDetailPage from "./pages/FundraiserDetailPage";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Route path="/donation" element={<Web3Provider><Donation /></Web3Provider>} />
       <Route path="/create-fundraiser" element={<Web3Provider><CreateFundraiser /></Web3Provider>} />
       <Route path="/validator-registration" element={<Web3Provider><ValidatorRegistration /></Web3Provider>} />
+      <Route path="/fund/:id" element={<Web3Provider><FundraisersDetailPage /></Web3Provider>} />
     </Routes>
   )
 }
