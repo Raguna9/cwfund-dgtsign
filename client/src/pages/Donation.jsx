@@ -1,7 +1,6 @@
 import React from 'react'
 import NavigationBar from '../components/NavigationBar'
-import ValidatedDonationList from '../components/ValidatedDonationList'
-import UnvalidatedDonationList from '../components/validator/UnvalidatedDonationList'
+import FundraiserList from '../components/FundraiserList'
 
 const Donation = () => {
   return (
@@ -11,10 +10,7 @@ const Donation = () => {
       <h1 className="text-2xl font-bold mb-8 text-gray-900 text-center pt-6">
         Validated Fundraiser
       </h1>
-      <ValidatedDonationList /><h1 className="text-2xl font-bold mb-8 text-gray-900 text-center pt-6">
-        Unvalidated Fundraiser
-      </h1>
-      <UnvalidatedDonationList />
+      <FundraiserList />
     </>
   )
 }
