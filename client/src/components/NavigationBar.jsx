@@ -29,8 +29,8 @@ const NavigationBar = () => {
             Home
           </a>
           <a
-            href="/donation"
-            className={`text-black hover:text-blue-500 mx-4 ${isActive("/donation") &&
+            href="/fund"
+            className={`text-black hover:text-blue-500 mx-4 ${isActive("/fund") &&
               "text-black font-bold pointer-events-none"
               }`}
           >

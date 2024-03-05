@@ -30,6 +30,7 @@ const ValidatedDonationList = () => {
     try {
       const newFunds = await factory.methods.getFundraisers(10, 0).call();
       setFundraisers(newFunds);
+      console.log(fundraisers);
       setLoading(false);
     } catch (err) {
       console.error(err.message);
@@ -53,26 +54,26 @@ const ValidatedDonationList = () => {
         </div>
       );
 
-    if (fundraisers.length > 0)
+    if (fundraisers.length > 0) {
       return fundraisers.map((fund, idx) => (
         <div key={idx} className="flex justify-center items-center">
           <FundriaserCard fundraiser={fund} />
         </div>
       ));
+    }
+    else {
+      return (
+        <div className="text-center">
+          <p className="text-gray-500">Belum ada penggalangan dana.</p>
+        </div>
+      );
+    }
 
-    return (
-      <div className="text-center">
-        <p className="text-gray-500">Belum ada penggalangan dana.</p>
-      </div>
-    );
   };
 
   return (
     <div className="text-center">
       <h2 className="mb-4 text-2xl font-bold">Daftar Penggalangan Dana</h2>
-      <p>
-        Berikut daftar pelanggangan
-      </p>
       <div className="mt-4">{displayContent()}</div>
     </div>
   );

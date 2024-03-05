@@ -63,9 +63,9 @@ const FundraiserCard = (props) => {
             <img className="w-full" src={fund.imageURL} alt="Gambar Penggalangan Dana" style={styles.media} />
             <div className="mt-4">
                 <h5 className="text-xl font-bold">{fund.title}</h5>
-                <p className="text-xl text-gray-600">Terkumpul: {fund.donationAmountETH}</p>
+                <p className="text-xl text-gray-600">Terkumpul: {fund.donationAmountETH} ETH</p>
                 <p className="text-xl text-gray-600">
-                    Status Validasi: {fund.validationStatus ? 'Tervalidasi' : 'Belum Tervalidasi'}
+                    Status Validasi: {fund.validationStatus == true ? 'Tervalidasi' : 'Belum Tervalidasi'}
                 </p>
             </div>
             <div className="flex justify-end mt-4">
