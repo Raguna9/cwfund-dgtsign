@@ -13,6 +13,7 @@ const FundraisersDetails = () => {
     const [exchangeRate, setExchangeRate] = useState(null)
     const [userAcct, setUserAcct] = useState(null)
     const [isOwner, setIsOwner] = useState(false)
+    const [isValidator, setIsValidator] = useState(false)
     // const [userDonations, setUserDonations] = useState(null)
     const [details, setDetails] = useState({
         id: null,
@@ -98,9 +99,12 @@ const FundraisersDetails = () => {
             const donationAmount = await fundContract.methods.totalDonations().call()
             const donationAmountETH = await web3.utils.fromWei(donationAmount, 'ether')
             const donationAmountIDR = xRate.IDR * donationAmountETH
+        
+            const isValidator = await factory.methods.getRegisterStatus(accounts[0]).call()
             setExchangeRate(xRate)
             setDonationAmount(donationAmountIDR)
             setDonationAmountEth(donationAmountETH)
+            setIsValidator(isValidator)
             setDetails({
                 id: Number(id),
                 title,
@@ -359,9 +363,13 @@ const FundraisersDetails = () => {
                     <button onClick={handleDonate} className="bg-blue-500 text-white py-2 px-4 rounded">
                         Donasikan
                     </button>
-                    <button onClick={signFundraiser} className="bg-green-500 text-white py-2 px-4 rounded ml-4">
-                        Tanda Tangani Penggalangan Dana
-                    </button>
+                    {
+                        isValidator &&
+
+                        <button onClick={signFundraiser} className="bg-green-500 text-white py-2 px-4 rounded ml-4">
+                            Tanda Tangani Penggalangan Dana
+                        </button>
+                    }
                 </div>
                 {/* Riwayat Donasi Section */}
                 <div>
