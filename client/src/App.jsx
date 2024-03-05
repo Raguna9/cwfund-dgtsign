@@ -12,7 +12,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/donation" element={<Web3Provider><Donation /></Web3Provider>} />
+      <Route path="/fund" element={<Web3Provider><Donation /></Web3Provider>} />
       <Route path="/create-fundraiser" element={<Web3Provider><CreateFundraiser /></Web3Provider>} />
       <Route path="/validator-registration" element={<Web3Provider><ValidatorRegistration /></Web3Provider>} />
       <Route path="/fund/:id" element={<Web3Provider><FundraisersDetailPage /></Web3Provider>} />

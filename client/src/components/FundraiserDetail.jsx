@@ -313,7 +313,7 @@ const FundraisersDetails = () => {
 
     return (
         <>
-            <Link className="back-button" to="/donation">
+            <Link className="back-button" to="/fund">
                 <button className="bg-red-600 text-white py-2 px-4 rounded">
                     Kembali ke daftar
                 </button>
@@ -321,13 +321,13 @@ const FundraisersDetails = () => {
             <div className={styles.verticalSpacing}>
                 <h2 className="text-2xl font-bold mb-1">{details.title}</h2>
                 {/* <p className="text-xl text-gray-600">Terkumpul : Rp. {formatNumber(donationAmount)}</p> */}
-                <p className={styles.ethAmount}>({donationAmountEth} ETH)</p>
+                <p className={styles.ethAmount}>Sudah terkumpul sebanyak {donationAmountEth} ETH</p>
                 {/* <p className="text-xl text-gray-600">Total Donasi : {donationCount}</p> */}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <img className={styles.media} src={details.imageURL} alt="Gambar Penggalangan Dana" />
-                    <p className={`${styles.verticalSpacing} font-bold`}>{details.owner}</p>
+                    <p className={`${styles.verticalSpacing} font-bold`}>Beneficiary: {details.owner}</p>
                     <p className={styles.verticalSpacing}>{details.description}</p>
                     <p className={styles.verticalSpacing}>
                         <a href={details.url} className={`${styles.verticalSpacing} text-blue-700`}>
@@ -335,23 +335,16 @@ const FundraisersDetails = () => {
                         </a>
                         <br />
                         <br />
-                        <p className={`${styles.verticalSpacing} font-bold`}>{details.validator}</p>
-                        {
-                            details.status == true && (
-                                <p className={`${styles.verticalSpacing} font-bold`}>tervalidasi</p>
-                            )
-                        }
-                        {
-                            details.status == false && (
-                                <p className={`${styles.verticalSpacing} font-bold`}>belum tervalidasi</p>
-                            )
-                        }
+                        <p className={`${styles.verticalSpacing} font-bold`}>Validator: {details.validator}</p>
+                        <p className={`${styles.verticalSpacing} font-bold`}>
+                            Status Validasi: {details.status == true ? 'Tervalidasi' : 'Belum Tervalidasi'}
+                        </p>
                         <br />
                     </p>
                     {/* Donasi Section */}
                     <div className="mb-4">
                         <label htmlFor="donation-amount-input" className="block text-sm font-medium text-gray-700">
-                            Jumlah Donasi
+                            Jumlah Donasi (Masukan dalam Rupiah)
                         </label>
                         <input
                             type="number"
