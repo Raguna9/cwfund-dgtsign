@@ -6,7 +6,10 @@ const Donation = () => {
   return (
     <>
       <NavigationBar />
-      <FundraiserList />
+      <h2 className="mb-4 text-2xl text-center font-bold">Daftar Penggalangan Dana</h2>
+      <div className='flex flex-wrap mx-6'>
+        <FundraiserList />
+      </div>
     </>
   )
 }

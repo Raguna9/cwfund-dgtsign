@@ -56,7 +56,7 @@ const ValidatedDonationList = () => {
 
     if (fundraisers.length > 0) {
       return fundraisers.map((fund, idx) => (
-        <div key={idx} className="flex justify-center items-center">
+        <div key={idx} className="mr-6 shadow-xl">
           <FundriaserCard fundraiser={fund} />
         </div>
       ));
@@ -72,10 +72,7 @@ const ValidatedDonationList = () => {
   };
 
   return (
-    <div className="text-center">
-      <h2 className="mb-4 text-2xl font-bold">Daftar Penggalangan Dana</h2>
-      <div className="mt-4">{displayContent()}</div>
-    </div>
+    <>{displayContent()}</>
   );
 };
 
