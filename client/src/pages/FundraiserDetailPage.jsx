@@ -6,7 +6,10 @@ const Donation = () => {
     return (
         <>
             <NavigationBar />
-            <FundraisersDetails />
+
+            <div className="px-8 py-2 max-w-full mx-auto">
+                <FundraisersDetails />
+            </div>
         </>
     )
 }

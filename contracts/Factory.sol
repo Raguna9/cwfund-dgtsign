@@ -46,7 +46,7 @@ contract Factory {
         return _fundraisers.length;
     }
     
-    function getRegisterStatus(address _address) public view returns (bool) { //mengembalikan data boolean
+    function getRegisterStatus(address _address) public view returns (bool) { 
         return bytes(validatorsByAddress[_address].name).length > 0;
     }
 
@@ -88,7 +88,6 @@ contract Factory {
     string memory imageURL,
     address payable beneficiary
     ) public {
-        // Check if the limit for fundraisers is reached
         require(_fundraisers.length < maxLimit, "Fundraiser limit reached");
 
         fundraiserIdCounter++;
@@ -99,7 +98,8 @@ contract Factory {
             description,
             url,
             imageURL,
-            beneficiary
+            beneficiary,
+            msg.sender
         );
 
         _fundraisers.push(fundraiser);

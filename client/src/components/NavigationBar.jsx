@@ -17,7 +17,7 @@ const NavigationBar = () => {
   }
 
   return (
-    <nav className="bg-transparent px-4 py-3 font-sans">
+    <nav className="bg-transparent px-4 py-3 font-sans text-xl">
       <div className="max-w-full mx-auto flex items-center justify-between">
         <div className="md:flex">
           <a
@@ -30,9 +30,10 @@ const NavigationBar = () => {
           </a>
           <a
             href="/fund"
-            className={`text-black hover:text-blue-500 mx-4 ${isActive("/fund") &&
-              "text-black font-bold pointer-events-none"
-              }`}
+            className={`text-black hover:text-blue-500 mx-4 
+            ${isActive("/fund") && "text-black font-bold pointer-events-none"}
+            ${location.pathname.startsWith("/fund/") && "text-black font-bold pointer-events-none" }
+            `}
           >
             Donasi
           </a>

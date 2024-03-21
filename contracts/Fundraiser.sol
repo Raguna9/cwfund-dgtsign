@@ -25,11 +25,14 @@ contract Fundraiser is Ownable {
     string public description;
     string public url;
     string public imageURL;
+    address payable public beneficiary;
+
     bool public validationStatus;
     bytes32 public signature;
     address public validatorAddress;
-    address payable public beneficiary;
+    
     uint256 public totalDonations;
+    uint256 public donationsCount;
 
     constructor(
         uint256 _id,
@@ -37,7 +40,8 @@ contract Fundraiser is Ownable {
         string memory _description,
         string memory _url,
         string memory _imageURL,
-        address payable _beneficiary
+        address payable _beneficiary,
+        address _custodian
     ) Ownable(msg.sender) {
         id = _id;
         title = _title;
@@ -45,12 +49,12 @@ contract Fundraiser is Ownable {
         url = _url;
         imageURL = _imageURL;
         beneficiary = _beneficiary;
+        _transferOwnership(_custodian); 
         validationStatus = false;
         signature = 0x0;
         validatorAddress = address(0);
     }
 
-    // Validator sets validation status and signature
     function signFundraiser(bool _status, bytes32 _signature, address _validatorAddress) public {
         require(validationStatus == false, "Fundraiser has already been validated");
         validationStatus = _status;
@@ -69,7 +73,7 @@ contract Fundraiser is Ownable {
         _donations[msg.sender].push(donation);
         
         totalDonations += msg.value;
-        
+        donationsCount++;
         emit DonationReceived(msg.sender, msg.value);
     }
 
@@ -91,8 +95,20 @@ contract Fundraiser is Ownable {
         beneficiary = _beneficiary;
     }
 
-    function myDonationsCount() public view returns (uint256) {
-        return _donations[msg.sender].length;
+    function myDonations()
+        public
+        view
+        returns (uint256[] memory values, uint256[] memory dates)
+    {
+        uint256 count = _donations[msg.sender].length;
+        values = new uint256[](count);
+        dates = new uint256[](count);
+        for (uint256 i = 0; i < count; i++) {
+            Donation memory donation = _donations[msg.sender][i];
+            values[i] = donation.value;
+            dates[i] = donation.date;
+        }
+        return (values, dates);
     }
 
     function withdraw() external onlyOwner {

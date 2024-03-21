@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdCircle } from "react-icons/md";
 import { useWeb3 } from './Web3Provider';
+import Identicons from 'react-identicons'
 
 const UserEthAddress = () => {
     const [isConnected, setIsConnected] = useState(false);
@@ -36,15 +37,20 @@ const UserEthAddress = () => {
     }, [isConnected]);
     function formatAddress(address) {
         // Sesuaikan dengan panjang karakter yang diinginkan
-        const truncatedAddress = address.substring(0, 6) + "...." + address.slice(-4);
+        const truncatedAddress = address.substring(0, 7) + " . . . . " + address.slice(-5);
         return <span>{truncatedAddress}</span>;
       }
   return (
     <div className="hidden md:block">
-
       {isConnected ? (
         <div className="text-black mx-4 flex items-center">
-          {formatAddress(accounts[0])}
+          
+          <Identicons
+                className="rounded-full shadow-md mx-2"
+                string={accounts[0]}
+                size={18}
+              />
+              {formatAddress(accounts[0])}
           <MdCircle className="text-green-600 ml-1 h-3 m-auto" />
         </div>
       ) : (

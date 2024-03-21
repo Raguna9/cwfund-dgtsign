@@ -6,15 +6,15 @@ const Home = () => {
     return (
         <>
             <NavigationBar />
-            <div className="px-8 py-6 max-w-full mx-auto">
-                <div className="bg-white rounded-lg shadow-lg p-4">
+            <div className="px-8 py-2 max-w-full mx-auto">
+                <div className="bg-white rounded-lg shadow-lg py-10">
                     <div className="text-center mb-2">
                         <h2 className="text-4xl font-bold mb-2">
                             Selamat Datang di Aplikasi Donasi Terdesentralisasi
                         </h2>
-                        <img className='mx-auto' src="/donasi.png" title="Fundraisers" alt="Fundraisers" width="200" height="200" />
+                        <img className='mx-auto' src="/donasi.png" title="Fundraisers" alt="Fundraisers" width="350" height="350" />
                     </div>
-                    <div className="max-w-xl mx-auto text-center">
+                    <div className="max-w-4xl mx-auto text-center text-xl">
                         <p className="mb-2">
                             Aplikasi donasi terdesentralisasi ini merupakan aplikasi untuk membuat penggalangan dana dan melakukan donasi ke daftar penggalangan dana yang dipilih, semua aksi dan transaksi pada aplikasi ini berbasis pada jaringan blockchain Ethereum dan menggunakan ETH (mata uang ethereum) untuk melakukan donasi.
                         </p>

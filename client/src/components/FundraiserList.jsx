@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FundriaserCard from './FundraiserCard';
 import { useWeb3 } from './Web3Provider';
 
-const ValidatedDonationList = () => {
+const FundraiserList = () => {
   const [fundraisers, setFundraisers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -76,4 +76,4 @@ const ValidatedDonationList = () => {
   );
 };
 
-export default ValidatedDonationList;
+export default FundraiserList;

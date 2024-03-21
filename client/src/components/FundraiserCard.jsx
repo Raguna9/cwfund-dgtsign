@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FundraiserContract from '../json/Fundraiser.json';
 import { useWeb3 } from './Web3Provider';
-
+import Identicons from 'react-identicons'
 const styles = {
     media: {
         width: '100%',
@@ -22,6 +22,7 @@ const FundraiserCard = (props) => {
         description: null,
         imageURL: null,
         url: null,
+        beneficiary: null,
         validationStatus: false,
         donationAmountETH: null,
     });
@@ -37,6 +38,7 @@ const FundraiserCard = (props) => {
             const description = await instance.methods.description().call();
             const imageURL = await instance.methods.imageURL().call();
             const url = await instance.methods.url().call();
+            const beneficiary = await instance.methods.beneficiary().call();
             const validationStatus = await instance.methods.validationStatus().call();
             const donationAmount = await instance.methods.totalDonations().call();
             const donationAmountETH = await web3.utils.fromWei(donationAmount, 'ether');
@@ -46,6 +48,7 @@ const FundraiserCard = (props) => {
                 description,
                 imageURL,
                 url,
+                beneficiary,
                 validationStatus,
                 donationAmountETH,
             });
@@ -63,10 +66,19 @@ const FundraiserCard = (props) => {
             <img className="w-full" src={fund.imageURL} alt="Gambar Penggalangan Dana" style={styles.media} />
             <div className="mt-4">
                 <h5 className="text-xl font-bold">{fund.title}</h5>
-                <p className="text-xl text-gray-600">Terkumpul: {fund.donationAmountETH} ETH</p>
-                <p className="text-xl text-gray-600">
+                <p className="text-lg text-gray-600">Terkumpul: {fund.donationAmountETH} ETH</p>
+                <p className="text-lg text-gray-600">
                     Status Validasi: {fund.validationStatus == true ? 'Tervalidasi' : 'Belum Tervalidasi'}
                 </p>
+                <p className="text-lg text-gray-600 flex items-center">
+                    <Identicons
+                        className="rounded-full shadow-md mr-2"
+                        string={fund.beneficiary}
+                        size={15}
+                    />
+                    {fund.beneficiary}
+                </p>
+
             </div>
             <div className="flex justify-end mt-4">
                 <Link
@@ -78,6 +90,7 @@ const FundraiserCard = (props) => {
                             description: fund.description,
                             imageURL: fund.imageURL,
                             url: fund.url,
+                            beneficiary: fund.beneficiary,
                             validationStatus: fund.validationStatus,
                             donationAmountETH: fund.donationAmountETH,
                         },
